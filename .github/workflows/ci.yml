@@ -70,13 +70,16 @@ jobs:
     - name: Update cabal package index
       run: cabal update
 
-    - name: cabal configure
-      run: cabal configure --enable-tests --enable-benchmarks
-
     - name: Install project dependencies
-      run: cabal build all
+      run: cabal build --dependencies-only --enable-test
+
+#    - name: cabal configure
+#      run: cabal configure --enable-tests --enable-benchmarks
+
+#    - name: Install project dependencies
+#      run: cabal build all
 
     - name: Build and run tests
-      run: cabal test all
+      run: cabal test
       env:
         HSPEC_OPTIONS: --color
