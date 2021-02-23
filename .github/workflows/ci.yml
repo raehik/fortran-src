@@ -10,8 +10,9 @@ on:
     - synchronize
 
 jobs:
-  build:
+  build-test-ubuntu-stack:
     runs-on: ubuntu-latest
+    name: Ubuntu / Stack
     steps:
     - uses: actions/checkout@v2
 
@@ -32,3 +33,42 @@ jobs:
 
     - name: Build and run tests
       run: stack --no-terminal haddock --test --no-haddock-deps
+
+  build-test-ubuntu-cabal:
+    runs-on: ubuntu-latest
+    name: Ubuntu / GHC ${{ matrix.ghc }}, Cabal ${{ matrix.cabal }}
+    strategy:
+      matrix:
+        cabal: [latest]
+        ghc:
+#        - "8.6"
+#        - "8.8"
+        - "8.10"
+#        - latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Setup Haskell build environment
+      id: setup-haskell-build-env
+      uses: haskell/actions/setup@v1
+      with:
+        ghc-version: ${{ matrix.ghc }}
+        cabal-version: ${{ matrix.cabal }}
+
+    - name: Cache Cabal build artifacts
+      uses: actions/cache@v2
+      with:
+        path: |
+          ${{ steps.setup-haskell-build-env.outputs.cabal-store }}
+          dist-newstyle
+        # best effort for cache: tie it to Stack resolver and package config
+#        key: ${{ runner.os }}-cabal-${{ hashFiles('cabal.project.freeze') }}
+        key: ${{ runner.os }}-cabal-${{ hashFiles('*.cabal') }}
+        restore-keys: |
+          ${{ runner.os }}-cabal
+
+    - name: Install project dependencies
+      run: cabal install --dependencies-only --enable-tests
+
+    - name: Build and run tests
+      run: cabal test
