@@ -39,7 +39,7 @@ jobs:
     name: Ubuntu / GHC ${{ matrix.ghc }}, Cabal ${{ matrix.cabal }}
     strategy:
       matrix:
-        cabal: [latest]
+        cabal: ["3.2"] # latest as of 2021-02-23
         ghc:
 #        - "8.6"
 #        - "8.8"
