@@ -67,8 +67,16 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-cabal
 
+    - name: Update cabal package index
+      run: cabal update
+
+    - name: cabal configure
+      run: cabal configure --enable-tests --enable-benchmarks
+
     - name: Install project dependencies
-      run: cabal build --only-dependencies --enable-tests
+      run: cabal build all
 
     - name: Build and run tests
-      run: cabal test
+      run: cabal test all
+      env:
+        HSPEC_OPTIONS: --color

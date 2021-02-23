@@ -91,4 +91,3 @@ tests:
     - fortran-src
     - deepseq
     - hspec >=2.2 && <3
-    - hspec-discover
