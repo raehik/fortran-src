@@ -64,15 +64,10 @@ jobs:
         path: |
           ${{ steps.setup-haskell-build-env.outputs.cabal-store }}
           dist-newstyle
-        key: fresh3-${{ runner.os }}-cabal-${{ matrix.ghc }}-${{ hashFiles('cabal.project.freeze') }}
+        key: ${{ runner.os }}-cabal-${{ matrix.ghc }}-${{ hashFiles('cabal.project.freeze') }}
         restore-keys: |
-          fresh3-${{ runner.os }}-cabal-${{ matrix.ghc }}
+          ${{ runner.os }}-cabal-${{ matrix.ghc }}
 
-    - name: TODO dist folder before
-      run: du -hcd1 dist-newstyle
-
-    # note: for some reason, --enable-tests --enable-benchmarks always forces a
-    # rebuild?? TODO no? dont get it
     - name: Build
       run: cabal build
 
@@ -80,6 +75,3 @@ jobs:
       run: cabal test --test-show-details=streaming
       env:
         HSPEC_OPTIONS: --color
-
-    - name: TODO dist folder after
-      run: du -hcd1 dist-newstyle
