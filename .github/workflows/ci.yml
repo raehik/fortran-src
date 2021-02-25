@@ -57,8 +57,9 @@ jobs:
 
     - name: Update cabal package index
       run: cabal update
+
     - name: Freeze cabal plan
-      run: cabal update --enable-tests --enable-benchmarks
+      run: cabal freeze --enable-tests --enable-benchmarks
 
     - name: Cache Cabal build artifacts
       uses: actions/cache@v2
