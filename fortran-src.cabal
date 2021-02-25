@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 7bcf07069d501a83aa94f57235cc14bd65dbabe1c0321e6d7a76dceeea993808
+-- hash: f388ed1a0c6c8f6fb14299e9f91771687f908f7ed3d6ffae437aa0400e457d96
 
 name:           fortran-src
 version:        0.4.1
@@ -73,7 +73,7 @@ library
     , binary >=0.8.3.0 && <0.11
     , bytestring >=0.10 && <0.12
     , containers >=0.5 && <0.7
-    , deepseq
+    , deepseq >=1.4.4 && <1.5
     , directory >=1.2 && <2
     , fgl >=5 && <6
     , filepath >=1.4 && <2
@@ -95,7 +95,7 @@ executable fortran-src
     , binary >=0.8.3.0 && <0.11
     , bytestring >=0.10 && <0.12
     , containers >=0.5 && <0.7
-    , deepseq
+    , deepseq >=1.4.4 && <1.5
     , directory >=1.2 && <2
     , fgl >=5 && <6
     , filepath >=1.4 && <2

@@ -68,9 +68,9 @@ jobs:
           ${{ steps.setup-haskell-build-env.outputs.cabal-store }}
           dist-newstyle
         # best effort for cache: tie it to Stack resolver and package config
-        key: ${{ runner.os }}-cabal-${{ matrix.ghc }}-${{ hashFiles('cabal.project.freeze') }}
+        key: test-${{ runner.os }}-cabal-${{ matrix.ghc }}-${{ hashFiles('cabal.project.freeze') }}
         restore-keys: |
-          ${{ runner.os }}-cabal
+          test-${{ runner.os }}-cabal-${{ matrix.ghc }}
 
     - name: Build
       run: cabal build --enable-tests --enable-benchmarks
