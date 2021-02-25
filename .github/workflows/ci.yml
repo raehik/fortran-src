@@ -55,21 +55,18 @@ jobs:
         ghc-version: ${{ matrix.ghc }}
         cabal-version: ${{ matrix.cabal }}
 
-    - name: Update Cabal package index
-      run: cabal update
-
     - name: Freeze Cabal plan
       run: cabal freeze --enable-tests --enable-benchmarks
 
     - name: Cache Cabal build artifacts
       uses: actions/cache@v2
       with:
-          # ${{ steps.setup-haskell-build-env.outputs.cabal-store }}
         path: |
+          ${{ steps.setup-haskell-build-env.outputs.cabal-store }}
           dist-newstyle
-        key: fresh2-${{ runner.os }}-cabal-${{ matrix.ghc }}-${{ hashFiles('cabal.project.freeze') }}
+        key: fresh3-${{ runner.os }}-cabal-${{ matrix.ghc }}-${{ hashFiles('cabal.project.freeze') }}
         restore-keys: |
-          fresh2-${{ runner.os }}-cabal-${{ matrix.ghc }}
+          fresh3-${{ runner.os }}-cabal-${{ matrix.ghc }}
 
     - name: TODO dist folder before
       run: du -hcd1 dist-newstyle
