@@ -57,12 +57,14 @@ jobs:
     # merged in Aug 2020.
     # Upstream GHC issue: https://gitlab.haskell.org/ghc/ghc/-/issues/16495
     # My issue on haskell/actions: https://github.com/haskell/actions/issues/41
-    - name: Set all tracked file modification times to their last commit date
+    - name: Set all tracked file modification times to the time of their last commit
       run: |
         rev=HEAD
         for f in $(git ls-tree -r -t --full-name --name-only "$rev") ; do
             touch -d $(git log --pretty=format:%cI -1 "$rev" -- "$f") "$f";
         done
+    - name: Check some file modification times
+      run: ls -lh
 
     - name: Setup Haskell build environment
       id: setup-haskell-build-env
